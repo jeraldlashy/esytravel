@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
+
 // const posts = [
 //   {
 //     id: 1,
@@ -52,43 +53,41 @@ import { useEffect } from "react";
 //   // More posts...
 // ];
 
-
 const getTopics = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/destinations", {
+    const res = await fetch("http://localhost:3000/api/posts", {
       cache: "no-store",
     });
 
     if (!res.ok) {
-      throw new Error("Failed to fetch destinations");
+      throw new Error("Failed to fetch topics");
     }
 
-    const data = await res.json();
-    return data.destinations || []; // Return an empty array if data.destinations is undefined
+    return res.json();
   } catch (error) {
-    console.error('Error fetching destinations:', error);
-    return []; // Return an empty array in case of error
+    console.log("Error loading topics: ", error);
   }
 };
+
 
 const categories = ["Apartment", "House", "Hostel", "Villa"];
 const amenities = ["Accessible", "Air Conditioning", "Gym", "Pool", "Wifi"];
 
+
 export default function Destination() {
-
-
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedAmenities, setSelectedAmenities] = useState([]);
-  const [posts, setPosts] = useState([]);
 
-  const fetchData = async () => {
-    const destinations = await getTopics();
-    setPosts(destinations);
-  };
 
-  // Fetch data when the component mounts
   useEffect(() => {
-    fetchData();
+    fetch('/api/posts')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.posts) {
+          setPosts(data.posts);
+        }
+      })
+      .catch((error) => console.error('Error fetching posts:', error));
   }, []);
 
   const filterPosts = () => {
@@ -96,13 +95,9 @@ export default function Destination() {
       const categoryMatch =
         selectedCategories.length === 0 ||
         selectedCategories.includes(post.category.title);
-
       const amenityMatch =
         selectedAmenities.length === 0 ||
-        selectedAmenities.some((amenity) =>
-          post.amenities.some((destAmenity) => destAmenity.title.includes(amenity))
-        );
-
+        selectedAmenities.some((amenity) => post.description.includes(amenity));
       return categoryMatch && amenityMatch;
     });
   };
@@ -120,7 +115,6 @@ export default function Destination() {
       : [...selectedAmenities, amenity];
     setSelectedAmenities(updatedAmenities);
   };
-
   return (
     <div className="bg-white py-24 sm:py-32 flex">
       {/* Filter section */}
