@@ -7,8 +7,6 @@ import Footer from "./footer";
 import Header from "./header";
 
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
