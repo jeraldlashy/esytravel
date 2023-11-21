@@ -10,7 +10,7 @@ import {
 
 const navigation = [
   { name: "Popular Destinations", href: "/popular" },
-  { name: "Travel Outside", href: "/travel" },
+  // { name: "Travel Outside", href: "/travel" },
   { name: "Volunteer Services", href: "/volunteer" },
   { name: "About Us", href: "/about-us" },
 ];

@@ -18,12 +18,9 @@ const getDestinations = async () => {
   }
 };
 
-const categories = ["Apartment", "House", "Hostel", "Villa"];
-const amenities = ["Accessible", "Air Conditioning", "Gym", "Pool", "Wifi"];
 
 export default async function Destination() {
   const { destinations } = await getDestinations();
-  console.log(destinations)
 
   return (
     <>
