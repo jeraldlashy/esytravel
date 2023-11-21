@@ -1,5 +1,5 @@
 
-const getDestinations = async () => {
+export const getDestinations = async () => {
   try {
     const res = await fetch("http://localhost:3000/api/destinations", {
       cache: "no-store",
