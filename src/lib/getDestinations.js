@@ -1,7 +1,7 @@
 
 export const getDestinations = async () => {
   try {
-    const res = await fetch("https://esytravel-jeraldlashy.vercel.app/api/destinations", {
+    const res = await fetch("/api/destinations", {
       cache: "no-store",
     });
 
