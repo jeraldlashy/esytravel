@@ -1,6 +1,21 @@
 import React from "react";
 import Link from "next/link";
-import { getDestinations } from "@/lib/getDestinations";
+import {GET} from '@/app/api/destinations/route'
+
+const getDestinations = async () => {
+  try {
+
+    const res = await GET();
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch destinations");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.log("Error loading destinations: ", error);
+  }
+};
 
 export default async function Destination() {
   const { destinations } = await getDestinations();
